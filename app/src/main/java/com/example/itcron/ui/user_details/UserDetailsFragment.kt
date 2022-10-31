@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.itcron.R
 import com.example.itcron.databinding.FragmentUserDetailsBinding
@@ -23,12 +23,11 @@ internal class UserDetailsFragment : Fragment(R.layout.fragment_user_details) {
         const val name = "UserDetails"
     }
 
-    private lateinit var viewModel: UserDetailsViewModel
+    private val viewModel: UserDetailsViewModel by viewModels()
     private lateinit var binding: FragmentUserDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[UserDetailsViewModel::class.java]
         arguments?.getString(LOGIN_KEY)?.let { login ->
             viewModel.setLogin(login)
         }

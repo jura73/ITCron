@@ -16,6 +16,7 @@ internal class UserDetailsViewModel : ViewModel() {
     var isLoading: LiveData<Boolean> = _isLoading
     private val user = MutableLiveData<UserModel>()
     private var disposable: Disposable? = null
+    private var login: String? = null
 
     fun setLogin(login: String) {
         loadUserDetails(login)
@@ -31,17 +32,22 @@ internal class UserDetailsViewModel : ViewModel() {
     }
 
     private fun loadUserDetails(login: String) {
-        _isLoading.value = true
-        val userService = RetrofitClient.instance.create(UserService::class.java)
-        disposable = userService.getUser(login)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                _isLoading.value = false
-                user.value = it
-            }, {
-                _isLoading.value = false
-            })
+        if(this.login != login){
+            _isLoading.value = true
+            disposable?.dispose()
+            this.login = login
+            val userService = RetrofitClient.instance.create(UserService::class.java)
+            disposable = userService.getUser(login)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _isLoading.value = false
+                    user.value = it
+                }, {
+                    _isLoading.value = false
+                  //  login= null
+                })
+        }
     }
 
 }
