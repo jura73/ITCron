@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ITCron</string>
+
+    <string name="caption_organisation">organisation %s</string>
+    <string name="caption_following">following %d</string>
+    <string name="caption_followers">followers %d</string>
+    <string name="caption_created_at">created at %s</string>
+
+</resources>
